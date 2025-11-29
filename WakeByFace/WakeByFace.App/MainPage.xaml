@@ -1,0 +1,485 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WakeByFace.App.MainPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#7B9B9C">
+    <ContentPage.Resources>
+        <Color x:Key="MainBackgroundColor">#7B9B9C</Color>
+        <Color x:Key="SectionsColor">#a6b0b1</Color>
+        <Color x:Key="OrangeColor">#e69a67</Color>
+        <Color x:Key="DarkColor">#383e3f</Color>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".15*"/>
+            <RowDefinition Height=".75*"/>
+            <RowDefinition Height=".1*"/>
+        </Grid.RowDefinitions>
+
+        <Frame BackgroundColor="{StaticResource MainBackgroundColor}"
+               BorderColor="Transparent"
+               HasShadow="False"
+               CornerRadius="0"
+               Padding="0" >
+            <Grid BackgroundColor="{StaticResource MainBackgroundColor}">
+
+                <Image Source="alarms.png"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+
+                <!--Роздільна Вертикальна лінія-->
+                <BoxView HeightRequest="2"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="End"
+                         BackgroundColor="{StaticResource DarkColor}"/>
+            </Grid>
+        </Frame >
+        
+        <Frame Grid.Row="1"
+               BackgroundColor="{StaticResource MainBackgroundColor}"
+               BorderColor="Transparent"
+               HasShadow="False"
+               CornerRadius="0"
+               Padding="0">
+
+            <ScrollView>
+                <VerticalStackLayout Padding="12" Spacing="10">
+
+                    <!-- Enabled alarm -->
+                    <Frame BackgroundColor="{StaticResource OrangeColor}"
+                   CornerRadius="20"
+                   HasShadow="False"
+                   Padding="12">
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Ліва частина: текст -->
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label Text="Прокинься"
+                               FontSize="12"
+                               TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="06:30"
+                               FontSize="28"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="Пн  Вт  Ср  Чт  Пт  Сб  Нд"
+                               FontSize="12"
+                               TextColor="{StaticResource DarkColor}" />
+                            </VerticalStackLayout>
+
+                            <!-- Права частина: кастомний тумблер (ON) -->
+                            <Grid Grid.Column="1"
+                          HorizontalOptions="End"
+                          VerticalOptions="Center">
+                                <Frame BackgroundColor="{StaticResource MainBackgroundColor}"
+                               CornerRadius="20"
+                               Padding="3"
+                               HasShadow="False"
+                               WidthRequest="48"
+                               HeightRequest="26">
+                                    <Grid>
+                                        <!-- трек -->
+                                        <!-- рухома "кнопка" справа -->
+                                        <Frame BackgroundColor="{StaticResource DarkColor}"
+                                       CornerRadius="20"
+                                       HasShadow="False"
+                                       HorizontalOptions="End"
+                                       VerticalOptions="Center"
+                                       WidthRequest="20"
+                                       HeightRequest="20" />
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Disabled alarm -->
+                    <Frame BackgroundColor="{StaticResource SectionsColor}"
+                   CornerRadius="20"
+                   HasShadow="False"
+                   Padding="12">
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label Text="Прокинься"
+                               FontSize="12"
+                               TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="06:30"
+                               FontSize="28"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="Пн  Вт  Ср  Чт  Пт  Сб  Нд"
+                               FontSize="12"
+                               TextColor="{StaticResource DarkColor}" />
+                            </VerticalStackLayout>
+
+                            <!-- Тумблер (OFF) -->
+                            <Grid Grid.Column="1"
+                          HorizontalOptions="End"
+                          VerticalOptions="Center">
+                                <Frame BackgroundColor="{StaticResource MainBackgroundColor}"
+                               CornerRadius="20"
+                               Padding="3"
+                               HasShadow="False"
+                               WidthRequest="48"
+                               HeightRequest="26">
+                                    <Grid>
+                                        <!-- "кнопка" зліва -->
+                                        <Frame BackgroundColor="{StaticResource DarkColor}"
+                                       CornerRadius="20"
+                                       HasShadow="False"
+                                       HorizontalOptions="Start"
+                                       VerticalOptions="Center"
+                                       WidthRequest="20"
+                                       HeightRequest="20" />
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+                    
+                    <!--#region Наповнення будильників -->
+                    <!-- Disabled alarm -->
+                    <Frame BackgroundColor="{StaticResource SectionsColor}"
+                            CornerRadius="20"
+                            HasShadow="False"
+                            Padding="12">
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label Text="Прокинься"
+                                        FontSize="12"
+                                        TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="06:30"
+                                        FontSize="28"
+                                        FontAttributes="Bold"
+                                        TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="Пн  Вт  Ср  Чт  Пт  Сб  Нд"
+                                        FontSize="12"
+                                        TextColor="{StaticResource DarkColor}" />
+                            </VerticalStackLayout>
+
+                            <!-- Тумблер (OFF) -->
+                            <Grid Grid.Column="1"
+                                   HorizontalOptions="End"
+                                   VerticalOptions="Center">
+                                <Frame BackgroundColor="{StaticResource MainBackgroundColor}"
+                                        CornerRadius="20"
+                                        Padding="3"
+                                        HasShadow="False"
+                                        WidthRequest="48"
+                                        HeightRequest="26">
+                                    <Grid>
+                                        <!-- "кнопка" зліва -->
+                                        <Frame BackgroundColor="{StaticResource DarkColor}"
+                                                CornerRadius="20"
+                                                HasShadow="False"
+                                                HorizontalOptions="Start"
+                                                VerticalOptions="Center"
+                                                WidthRequest="20"
+                                                HeightRequest="20" />
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Disabled alarm -->
+                    <Frame BackgroundColor="{StaticResource SectionsColor}"
+        CornerRadius="20"
+        HasShadow="False"
+        Padding="12">
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label Text="Прокинься"
+                    FontSize="12"
+                    TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="06:30"
+                    FontSize="28"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="Пн  Вт  Ср  Чт  Пт  Сб  Нд"
+                    FontSize="12"
+                    TextColor="{StaticResource DarkColor}" />
+                            </VerticalStackLayout>
+
+                            <!-- Тумблер (OFF) -->
+                            <Grid Grid.Column="1"
+               HorizontalOptions="End"
+               VerticalOptions="Center">
+                                <Frame BackgroundColor="{StaticResource MainBackgroundColor}"
+                    CornerRadius="20"
+                    Padding="3"
+                    HasShadow="False"
+                    WidthRequest="48"
+                    HeightRequest="26">
+                                    <Grid>
+                                        <!-- "кнопка" зліва -->
+                                        <Frame BackgroundColor="{StaticResource DarkColor}"
+                            CornerRadius="20"
+                            HasShadow="False"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            WidthRequest="20"
+                            HeightRequest="20" />
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Disabled alarm -->
+                    <Frame BackgroundColor="{StaticResource SectionsColor}"
+        CornerRadius="20"
+        HasShadow="False"
+        Padding="12">
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label Text="Прокинься"
+                    FontSize="12"
+                    TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="06:30"
+                    FontSize="28"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="Пн  Вт  Ср  Чт  Пт  Сб  Нд"
+                    FontSize="12"
+                    TextColor="{StaticResource DarkColor}" />
+                            </VerticalStackLayout>
+
+                            <!-- Тумблер (OFF) -->
+                            <Grid Grid.Column="1"
+               HorizontalOptions="End"
+               VerticalOptions="Center">
+                                <Frame BackgroundColor="{StaticResource MainBackgroundColor}"
+                    CornerRadius="20"
+                    Padding="3"
+                    HasShadow="False"
+                    WidthRequest="48"
+                    HeightRequest="26">
+                                    <Grid>
+                                        <!-- "кнопка" зліва -->
+                                        <Frame BackgroundColor="{StaticResource DarkColor}"
+                            CornerRadius="20"
+                            HasShadow="False"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            WidthRequest="20"
+                            HeightRequest="20" />
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Disabled alarm -->
+                    <Frame BackgroundColor="{StaticResource SectionsColor}"
+        CornerRadius="20"
+        HasShadow="False"
+        Padding="12">
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label Text="Прокинься"
+                    FontSize="12"
+                    TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="06:30"
+                    FontSize="28"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="Пн  Вт  Ср  Чт  Пт  Сб  Нд"
+                    FontSize="12"
+                    TextColor="{StaticResource DarkColor}" />
+                            </VerticalStackLayout>
+
+                            <!-- Тумблер (OFF) -->
+                            <Grid Grid.Column="1"
+               HorizontalOptions="End"
+               VerticalOptions="Center">
+                                <Frame BackgroundColor="{StaticResource MainBackgroundColor}"
+                    CornerRadius="20"
+                    Padding="3"
+                    HasShadow="False"
+                    WidthRequest="48"
+                    HeightRequest="26">
+                                    <Grid>
+                                        <!-- "кнопка" зліва -->
+                                        <Frame BackgroundColor="{StaticResource DarkColor}"
+                            CornerRadius="20"
+                            HasShadow="False"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            WidthRequest="20"
+                            HeightRequest="20" />
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Disabled alarm -->
+                    <Frame BackgroundColor="{StaticResource SectionsColor}"
+        CornerRadius="20"
+        HasShadow="False"
+        Padding="12">
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label Text="Прокинься"
+                    FontSize="12"
+                    TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="06:30"
+                    FontSize="28"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="Пн  Вт  Ср  Чт  Пт  Сб  Нд"
+                    FontSize="12"
+                    TextColor="{StaticResource DarkColor}" />
+                            </VerticalStackLayout>
+
+                            <!-- Тумблер (OFF) -->
+                            <Grid Grid.Column="1"
+               HorizontalOptions="End"
+               VerticalOptions="Center">
+                                <Frame BackgroundColor="{StaticResource MainBackgroundColor}"
+                    CornerRadius="20"
+                    Padding="3"
+                    HasShadow="False"
+                    WidthRequest="48"
+                    HeightRequest="26">
+                                    <Grid>
+                                        <!-- "кнопка" зліва -->
+                                        <Frame BackgroundColor="{StaticResource DarkColor}"
+                            CornerRadius="20"
+                            HasShadow="False"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            WidthRequest="20"
+                            HeightRequest="20" />
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Disabled alarm -->
+                    <Frame BackgroundColor="{StaticResource SectionsColor}"
+        CornerRadius="20"
+        HasShadow="False"
+        Padding="12">
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label Text="Прокинься"
+                    FontSize="12"
+                    TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="06:30"
+                    FontSize="28"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource DarkColor}" />
+
+                                <Label Text="Пн  Вт  Ср  Чт  Пт  Сб  Нд"
+                    FontSize="12"
+                    TextColor="{StaticResource DarkColor}" />
+                            </VerticalStackLayout>
+
+                            <!-- Тумблер (OFF) -->
+                            <Grid Grid.Column="1"
+               HorizontalOptions="End"
+               VerticalOptions="Center">
+                                <Frame BackgroundColor="{StaticResource MainBackgroundColor}"
+                    CornerRadius="20"
+                    Padding="3"
+                    HasShadow="False"
+                    WidthRequest="48"
+                    HeightRequest="26">
+                                    <Grid>
+                                        <!-- "кнопка" зліва -->
+                                        <Frame BackgroundColor="{StaticResource DarkColor}"
+                            CornerRadius="20"
+                            HasShadow="False"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            WidthRequest="20"
+                            HeightRequest="20" />
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+                    <!--#endregion-->
+
+                    <!-- Далі можна додати ще статичні/тестові будильники у сірому стилі -->
+                </VerticalStackLayout>
+            </ScrollView>
+        </Frame>
+
+        <Frame Grid.Row="2"
+               BorderColor="Transparent"
+               BackgroundColor="Transparent"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Padding="0">
+            <ImageButton x:Name="btnCreate"
+                         Source="add.png"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Center"
+                         HeightRequest="50"
+                         WidthRequest="50"
+                         BackgroundColor="Transparent"
+                         Clicked="CreateAlarmButtonClicked"/>
+        </Frame>
+        
+    </Grid>
+
+</ContentPage>

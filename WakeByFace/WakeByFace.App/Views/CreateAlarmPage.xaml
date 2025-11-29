@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WakeByFace.App.Views.CreateAlarmPage"
+             Title="CreateAlarmPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#7B9B9C">
+    <ContentPage.Resources>
+        <Color x:Key="MainBackgroundColor">#7B9B9C</Color>
+        <Color x:Key="SectionsColor">#a6b0b1</Color>
+        <Color x:Key="OrangeColor">#e69a67</Color>
+        <Color x:Key="DarkColor">#383e3f</Color>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".15*"/>
+            <RowDefinition Height=".75*"/>
+            <RowDefinition Height=".1*"/>
+        </Grid.RowDefinitions>
+
+        <Frame BackgroundColor="{StaticResource MainBackgroundColor}"
+               BorderColor="Transparent"
+               HasShadow="False"
+               CornerRadius="0"
+               Padding="0" >
+            <Grid BackgroundColor="{StaticResource MainBackgroundColor}">
+
+                <Image Source="create_alarm.png"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+
+                <!--Роздільна Вертикальна лінія-->
+                <BoxView HeightRequest="2"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="End"
+                         BackgroundColor="{StaticResource DarkColor}"/>
+            </Grid>
+        </Frame >
+
+        <Grid Grid.Row="1"
+              Padding="12"
+              RowSpacing="16">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- час -->
+                <RowDefinition Height="Auto"/>
+                <!-- дні -->
+                <RowDefinition Height="Auto"/>
+                <!-- назва -->
+                <RowDefinition Height="Auto"/>
+                <!-- сигнал + вібрація -->
+                <RowDefinition Height="*"/>
+                <!-- запас або скрол -->
+            </Grid.RowDefinitions>
+
+            <!-- Row 0 — Час -->
+            <Frame Grid.Row="0"
+                   BackgroundColor="{StaticResource SectionsColor}"
+                   CornerRadius="20"
+                   Padding="12">
+                <!-- Тут буде твій кастомний вибір часу -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <HorizontalStackLayout Spacing="6">
+                        <!--#region Години-->
+                        <Frame Grid.Row="0"
+                               BackgroundColor="{StaticResource SectionsColor}"
+                               CornerRadius="20"
+                               Padding="0">
+
+                            <CarouselView x:Name="HoursCarousel"
+                                          HeightRequest="150"
+                                          PeekAreaInsets="4"
+                                          IsBounceEnabled="False">
+
+                                <!-- ВАЖЛИВО: SnapPoints на LinearItemsLayout -->
+                                <CarouselView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical"
+                                                       ItemSpacing="0"
+                                                       SnapPointsType="MandatorySingle"
+                                                       SnapPointsAlignment="Center" />
+                                </CarouselView.ItemsLayout>
+
+                                <CarouselView.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>00</x:String>
+                                        <x:String>01</x:String>
+                                        <x:String>02</x:String>
+                                        <x:String>03</x:String>
+                                        <x:String>04</x:String>
+                                        <x:String>05</x:String>
+                                        <x:String>06</x:String>
+                                        <x:String>07</x:String>
+                                        <x:String>08</x:String>
+                                        <x:String>09</x:String>
+                                        <x:String>10</x:String>
+                                        <x:String>11</x:String>
+                                        <x:String>12</x:String>
+                                        <x:String>13</x:String>
+                                        <x:String>14</x:String>
+                                        <x:String>15</x:String>
+                                        <x:String>16</x:String>
+                                        <x:String>17</x:String>
+                                        <x:String>18</x:String>
+                                        <x:String>19</x:String>
+                                        <x:String>20</x:String>
+                                        <x:String>21</x:String>
+                                        <x:String>22</x:String>
+                                        <x:String>23</x:String>
+                                    </x:Array>
+                                </CarouselView.ItemsSource>
+
+                                <CarouselView.ItemTemplate>
+                                    <DataTemplate>
+                                        <!-- Висота одного елемента менша за загальну висоту,
+                         щоб було видно попередній/наступний, а середній був по центру -->
+                                        <Grid HeightRequest="50"
+                                              HorizontalOptions="Center"
+                                              VerticalOptions="Center">
+                                            <Label Text="{Binding .}"
+                                                   FontSize="36"
+                                                   HorizontalTextAlignment="Center"
+                                                   VerticalTextAlignment="Center" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CarouselView.ItemTemplate>
+                            </CarouselView>
+                        </Frame>
+                        <!--#endregion-->
+
+                        <!--#region Роздільник-->
+                        <Frame Grid.Row="1">
+                            <Label Text=":"
+                                   FontSize="36"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center" />
+                        </Frame>
+                        <!--#endregion-->
+
+                        <!--#region Хвилини-->
+                        <Frame Grid.Row="2"
+                               BackgroundColor="{StaticResource SectionsColor}"
+                               CornerRadius="20"
+                               Padding="0">
+
+                            <CarouselView x:Name="MinutesCarousel"
+                                          HeightRequest="150"
+                                          PeekAreaInsets="4"
+                                          IsBounceEnabled="False">
+
+                                <!-- ВАЖЛИВО: SnapPoints на LinearItemsLayout -->
+                                <CarouselView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical"
+                                                       ItemSpacing="0"
+                                                       SnapPointsType="MandatorySingle"
+                                                       SnapPointsAlignment="Center" />
+                                </CarouselView.ItemsLayout>
+
+                                <CarouselView.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>00</x:String>
+                                        <x:String>01</x:String>
+                                        <x:String>02</x:String>
+                                        <x:String>03</x:String>
+                                        <x:String>04</x:String>
+                                        <x:String>05</x:String>
+                                        <x:String>06</x:String>
+                                        <x:String>07</x:String>
+                                        <x:String>08</x:String>
+                                        <x:String>09</x:String>
+                                        <x:String>10</x:String>
+                                        <x:String>11</x:String>
+                                        <x:String>12</x:String>
+                                        <x:String>13</x:String>
+                                        <x:String>14</x:String>
+                                        <x:String>15</x:String>
+                                        <x:String>16</x:String>
+                                        <x:String>17</x:String>
+                                        <x:String>18</x:String>
+                                        <x:String>19</x:String>
+                                        <x:String>20</x:String>
+                                        <x:String>21</x:String>
+                                        <x:String>22</x:String>
+                                        <x:String>23</x:String>
+                                        <x:String>24</x:String>
+                                        <x:String>25</x:String>
+                                        <x:String>26</x:String>
+                                        <x:String>27</x:String>
+                                        <x:String>28</x:String>
+                                        <x:String>29</x:String>
+                                        <x:String>30</x:String>
+                                        <x:String>31</x:String>
+                                        <x:String>32</x:String>
+                                        <x:String>33</x:String>
+                                        <x:String>34</x:String>
+                                        <x:String>35</x:String>
+                                        <x:String>36</x:String>
+                                        <x:String>37</x:String>
+                                        <x:String>38</x:String>
+                                        <x:String>39</x:String>
+                                        <x:String>40</x:String>
+                                        <x:String>41</x:String>
+                                        <x:String>42</x:String>
+                                        <x:String>43</x:String>
+                                        <x:String>44</x:String>
+                                        <x:String>45</x:String>
+                                        <x:String>46</x:String>
+                                        <x:String>47</x:String>
+                                        <x:String>48</x:String>
+                                        <x:String>49</x:String>
+                                        <x:String>50</x:String>
+                                        <x:String>51</x:String>
+                                        <x:String>52</x:String>
+                                        <x:String>53</x:String>
+                                        <x:String>54</x:String>
+                                        <x:String>55</x:String>
+                                        <x:String>56</x:String>
+                                        <x:String>57</x:String>
+                                        <x:String>58</x:String>
+                                        <x:String>59</x:String>
+                                    </x:Array>
+                                </CarouselView.ItemsSource>
+
+                                <CarouselView.ItemTemplate>
+                                    <DataTemplate>
+                                        <!-- Висота одного елемента менша за загальну висоту,
+                                        щоб було видно попередній/наступний, а середній був по центру -->
+                                        <Grid HeightRequest="50"
+                                              HorizontalOptions="Center"
+                                              VerticalOptions="Center">
+                                            <Label Text="{Binding .}"
+                                                   FontSize="36"
+                                                   HorizontalTextAlignment="Center"
+                                                   VerticalTextAlignment="Center" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CarouselView.ItemTemplate>
+                            </CarouselView>
+                        </Frame>
+                        <!--#endregion-->
+
+                    </HorizontalStackLayout>
+                </Grid>
+            </Frame>
+
+            <!-- Row 1 — Дні тижня -->
+            <HorizontalStackLayout Grid.Row="1" Spacing="10">
+                <!-- Кнопки Пн, Вт, ... -->
+            </HorizontalStackLayout>
+
+            <!-- Row 2 — Назва -->
+            <Entry Grid.Row="2"
+                   Placeholder="Назва"
+                    BackgroundColor="{StaticResource SectionsColor}"
+                    TextColor="{StaticResource DarkColor}"
+                    PlaceholderColor="#90FFFFFF"
+                    HeightRequest="45"
+                    Margin="0"
+                    Keyboard="Default"
+                    x:Name="entryName"/>
+
+            <!-- Row 3 — Налаштування -->
+            <Frame Grid.Row="3"
+                   BackgroundColor="{StaticResource SectionsColor}"
+                   CornerRadius="20"
+                   Padding="12">
+                <VerticalStackLayout Spacing="18">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="Сигнал будильника"
+                                   TextColor="{StaticResource DarkColor}"/>
+                            <Label Text="Nightingale"
+                                   TextColor="{StaticResource DarkColor}"
+                                   FontSize="12"/>
+                        </VerticalStackLayout>
+
+                        <!-- Тумблер -->
+                        <Switch Grid.Column="1"/>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="Вібрація"
+                           TextColor="{StaticResource DarkColor}"/>
+                            <Label Text="Система"
+                           FontSize="12"
+                           TextColor="{StaticResource DarkColor}"/>
+                        </VerticalStackLayout>
+
+                        <!-- Тумблер -->
+                        <Switch Grid.Column="1"/>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Frame>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>
