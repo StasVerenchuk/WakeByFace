@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using WakeByFace.App.Services;
+using WakeByFace.App.ViewModels;
+using WakeByFace.App.Views;
 
 namespace WakeByFace.App
 {
@@ -15,8 +18,17 @@ namespace WakeByFace.App
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            //SQLite
+            builder.Services.AddSingleton<IDatabaseService, DatabaseService>();
+            builder.Services.AddSingleton<IAlarmService, AlarmService>();
+
+            // ViewModels
+            builder.Services.AddTransient<CreateAlarmViewModel>();
+
+            builder.Services.AddTransient<CreateAlarmPage>();
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
