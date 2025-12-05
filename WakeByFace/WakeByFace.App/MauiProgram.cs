@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Plugin.Maui.Audio;
 using WakeByFace.App.Services;
 using WakeByFace.App.ViewModels;
 using WakeByFace.App.Views;
@@ -26,6 +27,7 @@ namespace WakeByFace.App
             builder.Services.AddTransient<CreateAlarmViewModel>();
 
             builder.Services.AddTransient<CreateAlarmPage>();
+            builder.Services.AddSingleton(AudioManager.Current);
 
 #if DEBUG
             builder.Logging.AddDebug();
