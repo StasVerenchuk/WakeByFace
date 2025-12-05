@@ -39,5 +39,18 @@ namespace WakeByFace.App
             await Navigation.PushAsync(new CreateAlarmPage());
         }
 
+        private async void StartTestAlarmButtonClicked(object sender, EventArgs e)
+        {
+            var now = DateTime.Now;
+
+            var testAlarm = new Alarm
+            {
+                Name = "Тест будильника",
+                Hours = now.Hour,
+                Minutes = now.Minute
+            };
+
+            await Navigation.PushAsync(new AlarmRingingPage(testAlarm));
+        }
     }
 }
