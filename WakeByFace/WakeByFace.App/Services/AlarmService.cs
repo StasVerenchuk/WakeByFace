@@ -34,14 +34,14 @@ namespace WakeByFace.App.Services
         public async Task<int> AddAsync(Alarm alarm)
         {
             var db = await _databaseService.GetConnectionAsync();
-            alarm.CreatedAtUtc = alarm.UpdatedAtUtc = System.DateTime.UtcNow;
+            alarm.CreatedAtUtc = alarm.UpdatedAtUtc = DateTime.UtcNow;
             return await db.InsertAsync(alarm);
         }
 
         public async Task<int> UpdateAsync(Alarm alarm)
         {
             var db = await _databaseService.GetConnectionAsync();
-            alarm.UpdatedAtUtc = System.DateTime.UtcNow;
+            alarm.UpdatedAtUtc = DateTime.UtcNow;
             return await db.UpdateAsync(alarm);
         }
 

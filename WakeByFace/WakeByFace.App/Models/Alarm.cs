@@ -33,7 +33,7 @@ namespace WakeByFace.App.Models
         public string Name { get; set; } = string.Empty;
 
         // Configuration
-        public string SoundName { get; set; } = "Default";
+        public string SoundName { get; set; } = "rain_drops.mp3";
         public bool IsVibrationEnabled { get; set; } = true;
         public bool IsEnabled { get; set; } = true;
 
@@ -63,6 +63,39 @@ namespace WakeByFace.App.Models
                     ? "Одноразово"
                     : string.Join("  ", days);
             }
+        }
+
+        [Ignore]
+        public bool HasRepeats => RepeatMon || RepeatTue ||
+            RepeatWed || RepeatThu || RepeatFri || RepeatSat || RepeatSun;
+
+        /// <summary>
+        /// Is today date selected for repeat
+        /// </summary>
+        public bool MatchesToday(DateTime now)
+        {
+            if (!HasRepeats)
+                return true; // одноразовий
+
+            return now.DayOfWeek switch
+            {
+                DayOfWeek.Monday => RepeatMon,
+                DayOfWeek.Tuesday => RepeatTue,
+                DayOfWeek.Wednesday => RepeatWed,
+                DayOfWeek.Thursday => RepeatThu,
+                DayOfWeek.Friday => RepeatFri,
+                DayOfWeek.Saturday => RepeatSat,
+                DayOfWeek.Sunday => RepeatSun,
+                _ => false
+            };
+        }
+
+        /// <summary>
+        /// Чи настав час дзвонити (точний збіг годин і хвилин).
+        /// </summary>
+        public bool IsTimeToRing(DateTime now)
+        {
+            return now.Hour == Hours && now.Minute == Minutes;
         }
     }
 }
