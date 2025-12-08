@@ -23,10 +23,17 @@ namespace WakeByFace.App
             builder.Services.AddSingleton<IDatabaseService, DatabaseService>();
             builder.Services.AddSingleton<IAlarmService, AlarmService>();
 
+            builder.Services.AddSingleton<IForegroundAlarmScheduler, ForegroundAlarmScheduler>();
+
             // ViewModels
             builder.Services.AddTransient<CreateAlarmViewModel>();
 
+            // Pages
+            builder.Services.AddSingleton<MainPage>();
             builder.Services.AddTransient<CreateAlarmPage>();
+            builder.Services.AddTransient<AlarmRingingPage>();
+
+            // Audio
             builder.Services.AddSingleton(AudioManager.Current);
 
 #if DEBUG

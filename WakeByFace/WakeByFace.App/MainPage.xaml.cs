@@ -41,7 +41,7 @@ namespace WakeByFace.App
 
         private async void StartTestAlarmButtonClicked(object sender, EventArgs e)
         {
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
 
             var testAlarm = new Alarm
             {
