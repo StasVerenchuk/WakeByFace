@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Plugin.Maui.Audio;
 using WakeByFace.App.Services;
+using WakeByFace.App.Services.ML;
 using WakeByFace.App.ViewModels;
 using WakeByFace.App.Views;
 
@@ -24,6 +25,12 @@ namespace WakeByFace.App
             builder.Services.AddSingleton<IAlarmService, AlarmService>();
 
             builder.Services.AddSingleton<IForegroundAlarmScheduler, ForegroundAlarmScheduler>();
+
+            // ML
+#if ANDROID
+
+            builder.Services.AddSingleton<IEmotionClassifier, EmotionClassifier>();
+#endif
 
             // ViewModels
             builder.Services.AddTransient<CreateAlarmViewModel>();
