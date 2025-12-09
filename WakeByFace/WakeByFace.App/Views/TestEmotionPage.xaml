@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WakeByFace.App.Views.TestEmotionPage"
+             Title="TestEmotionPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#7B9B9C">
+    <ContentPage.Resources>
+        <Color x:Key="MainBackgroundColor">#7B9B9C</Color>
+        <Color x:Key="SectionsColor">#a6b0b1</Color>
+        <Color x:Key="OrangeColor">#e69a67</Color>
+        <Color x:Key="DarkColor">#383e3f</Color>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0"
+               Text="Тест розпізнавання емоцій"
+               TextColor="{StaticResource DarkColor}"
+               HorizontalTextAlignment="Center"
+               FontSize="22"/>
+
+
+        <Frame Grid.Row="1"
+               BackgroundColor="{StaticResource SectionsColor}"
+               CornerRadius="20"
+               Padding="16">
+            <VerticalStackLayout Spacing="16"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Label x:Name="targetEmotionLabel" 
+                       Text="Емоція"
+                       TextColor="{StaticResource DarkColor}"
+                       HorizontalTextAlignment="Center"
+                       FontSize="20"/>
+                <Label x:Name="statusLabel" 
+                       Text="Натисніть кнопку і покажіть емоцію"
+                       TextColor="{StaticResource DarkColor}"
+                       HorizontalTextAlignment="Center"
+                       FontSize="14"/>
+                <Label x:Name="resultLabel" 
+                       Text=""
+                       TextColor="{StaticResource DarkColor}"
+                       HorizontalTextAlignment="Center"
+                       FontSize="14"/>
+
+                <VerticalStackLayout Spacing="16"
+                                     HorizontalOptions="Center">
+                    <Button x:Name="btnCapture"
+                            Clicked="CaptureButtonClicked"
+                            Text="Зробити фото"
+                            BackgroundColor="{StaticResource OrangeColor}"
+                            TextColor="{StaticResource DarkColor}"
+                            CornerRadius="24"
+                            HeightRequest="48"
+                            WidthRequest="220"
+                            HorizontalOptions="Center"/>
+                    <Button x:Name="btnShuffle"
+                            Clicked="ShuffleButtonClicked"
+                            Text="Змінити емоцію"
+                            BackgroundColor="{StaticResource OrangeColor}"
+                            TextColor="{StaticResource DarkColor}"
+                            CornerRadius="24"
+                            HeightRequest="48"
+                            WidthRequest="220"
+                            HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Frame>
+        <Button Grid.Row="2"
+                x:Name="btnBack"
+                Clicked="BackButtonClicked"
+                IsEnabled="False"
+                Text="Повернутися на головну"
+                BackgroundColor="{StaticResource OrangeColor}"
+                TextColor="{StaticResource DarkColor}"
+                CornerRadius="24"
+                HeightRequest="48"
+                HorizontalOptions="Center"
+                Margin="0,12,0,0"/>
+    </Grid>
+</ContentPage>

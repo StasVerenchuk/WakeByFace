@@ -9,11 +9,15 @@ namespace WakeByFace.App
     {
         public MainPageViewModel ViewModel => (MainPageViewModel)BindingContext;
 
-        public MainPage()
+        private readonly TestEmotionPage _testEmotionPage;
+
+        public MainPage(TestEmotionPage testEmotionPage)
         {
             InitializeComponent();
 
-            // ❗ Простий варіант: створюємо сервіси вручну
+            _testEmotionPage = testEmotionPage;
+
+            // Простий варіант: створюємо сервіси вручну
             var dbService = new DatabaseService();
             var alarmService = new AlarmService(dbService);
             BindingContext = new MainPageViewModel(alarmService);
@@ -51,6 +55,11 @@ namespace WakeByFace.App
             };
 
             await Navigation.PushAsync(new AlarmRingingPage(testAlarm));
+        }
+
+        private async void TestEmotionRecognitionButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(_testEmotionPage);
         }
     }
 }
