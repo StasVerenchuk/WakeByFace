@@ -39,6 +39,7 @@ namespace WakeByFace.App
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddTransient<CreateAlarmPage>();
             builder.Services.AddTransient<AlarmRingingPage>();
+            builder.Services.AddTransient<TestEmotionPage>();
 
             // Audio
             builder.Services.AddSingleton(AudioManager.Current);
