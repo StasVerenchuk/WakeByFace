@@ -1,5 +1,6 @@
 ﻿using WakeByFace.App.Models;
 using WakeByFace.App.Services;
+using WakeByFace.App.Services.ML;
 using WakeByFace.App.ViewModels;
 using WakeByFace.App.Views;
 
@@ -10,17 +11,26 @@ namespace WakeByFace.App
         public MainPageViewModel ViewModel => (MainPageViewModel)BindingContext;
 
         private readonly TestEmotionPage _testEmotionPage;
+        private readonly IEmotionClassifier _emotionClassifier;
+        private readonly IAlarmService _alarmService;
 
-        public MainPage(TestEmotionPage testEmotionPage)
+        public MainPage(TestEmotionPage testEmotionPage, IEmotionClassifier emotionClassifier, IAlarmService alarmService)
         {
             InitializeComponent();
 
-            _testEmotionPage = testEmotionPage;
+            /*_testEmotionPage = testEmotionPage;
+            _emotionClassifier = emotionClassifier;
 
             // Простий варіант: створюємо сервіси вручну
             var dbService = new DatabaseService();
             var alarmService = new AlarmService(dbService);
-            BindingContext = new MainPageViewModel(alarmService);
+            BindingContext = new MainPageViewModel(alarmService);*/
+
+            _testEmotionPage = testEmotionPage;
+            _emotionClassifier = emotionClassifier;
+            _alarmService = alarmService;
+
+            BindingContext = new MainPageViewModel(_alarmService);
         }
 
         protected override async void OnAppearing()
@@ -54,7 +64,7 @@ namespace WakeByFace.App
                 Minutes = now.Minute
             };
 
-            await Navigation.PushAsync(new AlarmRingingPage(testAlarm));
+            await Navigation.PushAsync(new AlarmRingingPage(testAlarm, _emotionClassifier, _alarmService));
         }
 
         private async void TestEmotionRecognitionButtonClicked(object sender, EventArgs e)

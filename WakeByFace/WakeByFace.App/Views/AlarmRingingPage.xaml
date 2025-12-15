@@ -14,65 +14,91 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height=".2*"/>
-            <RowDefinition Height=".6*"/>
-            <RowDefinition Height=".2*"/>
+            <RowDefinition Height=".2*" />
+            <RowDefinition Height=".6*" />
+            <RowDefinition Height=".2*" />
         </Grid.RowDefinitions>
-        
+
         <!-- Header -->
-        <Frame Grid.Row="0" 
+        <Frame Grid.Row="0"
                BackgroundColor="{StaticResource SectionsColor}"
-               BorderColor="Transparent"
-               HasShadow="False"
-               CornerRadius="0"
-               Padding="0">
+               Padding="0"
+               HasShadow="False">
             <Grid BackgroundColor="{StaticResource MainBackgroundColor}">
                 <Label Text="Будильник"
-                       TextColor="{StaticResource OrangeColor}"
-                       FontAttributes="Bold"
                        FontSize="26"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource OrangeColor}"
                        HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"/>
-                <BoxView HeightRequest="2"
-                         HorizontalOptions="FillAndExpand"
-                         VerticalOptions="End"
-                         BackgroundColor="{StaticResource DarkColor}"/>
+                       VerticalTextAlignment="Center" />
             </Grid>
         </Frame>
-        
-        <!--Main section for name and time -->
+
+        <!-- Main -->
         <VerticalStackLayout Grid.Row="1"
-                             Spacing="20"
+                             Padding="20"
+                             Spacing="16"
                              HorizontalOptions="Center"
                              VerticalOptions="Center">
+
             <Label Text="{Binding Name}"
+                   FontSize="20"
                    TextColor="{StaticResource DarkColor}"
-                   HorizontalTextAlignment="Center"
-                   FontSize="20"/>
+                   HorizontalTextAlignment="Center"/>
+
             <Label Text="{Binding TextFormatted}"
-                   TextColor="{StaticResource DarkColor}"
-                   HorizontalTextAlignment="Center"
                    FontSize="52"
-                   FontAttributes="Bold"/>
-            <!-- Кнопка Зупинити -->
-            <Button Text="Зупинити"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource DarkColor}"
+                   HorizontalTextAlignment="Center"/>
+
+            <Frame BackgroundColor="{StaticResource SectionsColor}"
+                   CornerRadius="18"
+                   Padding="16"
+                   WidthRequest="320">
+
+                <VerticalStackLayout Spacing="8">
+
+                    <Label x:Name="targetEmotionLabel"
+                           FontSize="18"
+                           TextColor="{StaticResource DarkColor}"
+                           HorizontalTextAlignment="Center"/>
+
+                    <Label x:Name="statusLabel"
+                           FontSize="14"
+                           TextColor="{StaticResource DarkColor}"
+                           HorizontalTextAlignment="Center"/>
+
+                    <Label x:Name="resultLabel"
+                           FontSize="14"
+                           TextColor="{StaticResource DarkColor}"
+                           HorizontalTextAlignment="Center"/>
+
+                    <Button Text="Зробити фото"
+                            Clicked="CaptureButtonClicked"
+                            BackgroundColor="{StaticResource OrangeColor}"
+                            TextColor="{StaticResource DarkColor}"
+                            CornerRadius="30"
+                            HeightRequest="50"/>
+
+                    <Button Text="Змінити емоцію"
+                            Clicked="ShuffleButtonClicked"
+                            BackgroundColor="{StaticResource OrangeColor}"
+                            TextColor="{StaticResource DarkColor}"
+                            CornerRadius="24"
+                            HeightRequest="48"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button x:Name="btnStop"
+                    Text="Зупинити будильник"
                     Clicked="StopButtonClicked"
+                    IsEnabled="False"
                     BackgroundColor="{StaticResource OrangeColor}"
                     TextColor="{StaticResource DarkColor}"
                     CornerRadius="30"
                     HeightRequest="60"
-                    WidthRequest="200"
-                    HorizontalOptions="Center"/>
-
-            <!-- Тимчасова кнопка для тесту (можеш потім видалити)
-            <Button Text="🎧 Тест відтворення"
-                    Clicked="TestButtonClicked"
-                    BackgroundColor="{StaticResource SectionsColor}"
-                    TextColor="{StaticResource DarkColor}"
-                    CornerRadius="30"
-                    HeightRequest="50"
-                    WidthRequest="200"
-                    HorizontalOptions="Center"/> -->
+                    WidthRequest="220"/>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>
