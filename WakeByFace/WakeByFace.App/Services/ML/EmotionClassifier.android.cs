@@ -63,12 +63,10 @@ namespace WakeByFace.App.Services.ML
             if (bitmap is null)
                 throw new InvalidOperationException("Cannot decode image to Bitmap.");
 
-            using var scaled = Bitmap.CreateScaledBitmap(bitmap, _inputWidth, _inputHeight, filter: true);
+            // Вхід у мережу готуємо повністю в окремому методі
+            var inputBuffer = PreprocessBitmapToBuffer(bitmap);
 
-            // ❗ ВХІД: ByteBuffer з floatами (MobileNetV2 preprocess_input)
-            var inputBuffer = PreprocessBitmapToBuffer(scaled);
-
-            // ❗ ВИХІД: зубчастий масив [1][4]
+            // ВИХІД: зубчастий масив [1][4]
             float[][] rawOutput = new float[1][];
             rawOutput[0] = new float[_labels.Length];
 
@@ -106,16 +104,29 @@ namespace WakeByFace.App.Services.ML
         }
 
         /// <summary>
-        /// Перетворює Bitmap у ByteBuffer (float32 [1,224,224,3])
-        /// з нормалізацією x / 127.5 - 1 (як у MobileNetV2 preprocess_input).
+        /// Center-crop → resize до 224×224 → grayscale → дублікат у 3 канали
+        /// + нормалізація x / 127.5 - 1 (як у MobileNetV2 preprocess_input).
         /// </summary>
         private ByteBuffer PreprocessBitmapToBuffer(Bitmap bitmap)
         {
+            // 1. Center-crop до квадрата з оригінального кадру
+            int srcWidth = bitmap.Width;
+            int srcHeight = bitmap.Height;
+
+            int size = System.Math.Min(srcWidth, srcHeight);
+            int left = (srcWidth - size) / 2;
+            int top = (srcHeight - size) / 2;
+
+            using var cropped = Bitmap.CreateBitmap(bitmap, left, top, size, size);
+
+            // 2. Масштабуємо до 224×224
+            using var scaled = Bitmap.CreateScaledBitmap(cropped, _inputWidth, _inputHeight, true);
+
             int width = _inputWidth;
             int height = _inputHeight;
 
             int[] pixels = new int[width * height];
-            bitmap.GetPixels(pixels, 0, width, 0, 0, width, height);
+            scaled.GetPixels(pixels, 0, width, 0, 0, width, height);
 
             int floatSize = 4;
             var byteBuffer = ByteBuffer.AllocateDirect(width * height * 3 * floatSize);
@@ -132,13 +143,16 @@ namespace WakeByFace.App.Services.ML
                     int g = (color >> 8) & 0xFF;
                     int b = color & 0xFF;
 
-                    float rf = r / 127.5f - 1f;
-                    float gf = g / 127.5f - 1f;
-                    float bf = b / 127.5f - 1f;
+                    // Grayscale (люмінанс)
+                    float gray = 0.299f * r + 0.587f * g + 0.114f * b;
 
-                    byteBuffer.PutFloat(rf);
-                    byteBuffer.PutFloat(gf);
-                    byteBuffer.PutFloat(bf);
+                    // Нормалізація, як у MobileNetV2 preprocess_input
+                    float norm = gray / 127.5f - 1f;
+
+                    // Дублюємо одне й те саме значення в R,G,B
+                    byteBuffer.PutFloat(norm);
+                    byteBuffer.PutFloat(norm);
+                    byteBuffer.PutFloat(norm);
                 }
             }
 
