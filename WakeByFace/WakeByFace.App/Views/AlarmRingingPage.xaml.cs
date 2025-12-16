@@ -42,6 +42,10 @@ public partial class AlarmRingingPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+
+        btnStop.IsEnabled = false;
+        PickNewTargetEmotion();
+
         await StartRingtoneAsync();
     }
 
@@ -86,6 +90,8 @@ public partial class AlarmRingingPage : ContentPage
     private async void StopButtonClicked(object sender, EventArgs e)
     {
         Debug.WriteLine("[AlarmRingingPage] StopButtonClicked fired");
+
+        btnStop.IsEnabled = false;
 
         StopRingtone();
 
